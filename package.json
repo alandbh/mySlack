@@ -1,0 +1,15 @@
+{
+    "name": "myslack",
+    "version": "1.0.0",
+    "description": "A Electron shell for running Web based Slack.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "Alan Vasconcelos",
+    "license": "ISC",
+    "devDependencies": {
+        "electron": "^22.0.0"
+    }
+}
