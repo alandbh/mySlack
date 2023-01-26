@@ -1,8 +1,23 @@
-const { app, BrowserWindow, Menu, MenuItem, Tray } = require("electron");
+const {
+    app,
+    BrowserWindow,
+    Menu,
+    MenuItem,
+    Tray,
+    systemPreferences,
+} = require("electron");
 const { resolve } = require("path");
 const contextMenu = require("electron-context-menu");
 
 contextMenu();
+
+systemPreferences
+    .askForMediaAccess("camera")
+    .then((allowed) => console.log("Camera is allowed"));
+
+systemPreferences
+    .askForMediaAccess("microphone")
+    .then((allowed) => console.log("microphone is allowed"));
 
 const iconPngPath = resolve(__dirname, "myslack-logo-64.png");
 const iconIcnsPath = resolve(__dirname, "my_slack_logo.icns");
