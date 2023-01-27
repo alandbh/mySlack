@@ -1,10 +1,9 @@
 const {
     app,
     BrowserWindow,
-    Menu,
-    MenuItem,
     Tray,
     systemPreferences,
+    desktopCapturer,
 } = require("electron");
 const { resolve } = require("path");
 const contextMenu = require("electron-context-menu");
@@ -18,6 +17,10 @@ systemPreferences
 systemPreferences
     .askForMediaAccess("microphone")
     .then((allowed) => console.log("microphone is allowed"));
+
+const screenPrivilege = systemPreferences.getMediaAccessStatus("screen");
+
+console.log(`screenPrivilege: ${screenPrivilege}`);
 
 const iconPngPath = resolve(__dirname, "myslack-logo-64.png");
 const iconIcnsPath = resolve(__dirname, "my_slack_logo.icns");
@@ -73,6 +76,12 @@ app.whenReady().then(() => {
         win.show();
         return;
     });
+
+    desktopCapturer
+        .getSources({ types: ["window", "screen"] })
+        .then(async (sources) => {
+            win.webContents.send("SEND_SCREEN_SHARE_SOURCES", sources);
+        });
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
